@@ -30,7 +30,7 @@ class NotesView extends StatelessWidget {
           );
         },
         shape: const CircleBorder(),
-        backgroundColor: primaryColor,
+        backgroundColor: kPrimaryColor,
         child: const Icon(
           FontAwesomeIcons.plus,
           color: Colors.black,
