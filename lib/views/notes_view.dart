@@ -13,7 +13,11 @@ class NotesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notes'),
-        actions: const [CustomSearchIcon()],
+        actions: const [
+          CustomSearchIcon(
+            icon: Icons.search,
+          )
+        ],
       ),
       body: const NotesViewBody(),
       floatingActionButton: FloatingActionButton(
