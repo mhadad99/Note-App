@@ -5,6 +5,7 @@ import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:note_app/models/note_model.dart';
 import 'package:note_app/views/widgets/custom_button.dart';
 
+import '../../cubits/notes_cubit/notes_cubit.dart';
 import 'custom_text_field.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
@@ -18,6 +19,7 @@ class AddNoteBottomSheet extends StatelessWidget {
         listener: (context, state) {
           if (state is AddNoteSuccess) {
             Navigator.pop(context);
+            BlocProvider.of<NotesCubit>(context).fetchAllNotes();
           }
           if (state is AddNoteFailure) {
             debugPrint("failed ${state.error}");

@@ -14,7 +14,7 @@ class NotesView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Notes'),
         actions: const [
-          CustomSearchIcon(
+          CustomIconButton(
             icon: Icons.search,
           )
         ],
