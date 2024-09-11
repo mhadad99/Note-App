@@ -12,14 +12,36 @@ class NotesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NotesCubit, NotesState>(
       builder: (context, state) {
-        List<NoteModel> notes = BlocProvider.of<NotesCubit>(context).notes!;
+        List<NoteModel> notes = BlocProvider.of<NotesCubit>(context).notes;
         return ListView.builder(
-          itemCount: notes.length,
+          itemCount: BlocProvider.of<NotesCubit>(context)
+                  .searchTextController
+                  .text
+                  .isEmpty
+              ? notes.length
+              : BlocProvider.of<NotesCubit>(context).searchedNotes.length,
           itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: NoteItem(
-              note: notes[index],
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: BlocProvider.of<NotesCubit>(context)
+                    .searchTextController
+                    .text
+                    .isEmpty
+                ? Dismissible(
+                    key: Key(notes.toString()),
+                    onDismissed: (direction) {
+                      notes[index].delete();
+                      BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Note dismissed')));
+                    },
+                    child: NoteItem(
+                      note: notes[index],
+                    ),
+                  )
+                : NoteItem(
+                    note: BlocProvider.of<NotesCubit>(context)
+                        .searchedNotes[index],
+                  ),
           ),
         );
       },
